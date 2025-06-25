@@ -3,91 +3,64 @@ import { useEffect } from "react";
 
 export default function Form(props) {
   const [items, setItems] = useState({
-    topText: "One does not simply",
-    bottomText: "Walk into the mordor",
-    imgUrl: props.image,
+    topText: "KEEP CALM",
+    bottomText: "AND TAKE YOUR MONEY",
+    image: props.images,
   });
 
-  useEffect(() => {
-    setItems((prev) => ({
-      ...prev,
-      imgUrl: props.image,
-    }));
-  }, [props.image]);
-
   function handleChange(event) {
-    const { value, name } = event.currentTarget;
-    setItems((prevMeme) => ({
-      ...prevMeme,
-      [name]: value,
-    }));
+    const { name, value } = event.currentTarget;
+    setItems((prevItems) => ({ ...prevItems, [name]: value }));
   }
+  useEffect(() => {
+    setItems((prevItems) => ({
+      ...prevItems,
+      image: props.images,
+    }));
+  }, [props.images]);
   return (
-    <div className="flex flex-col">
-      {/* The inputs container starts Here */}
-      <div className="flex items-left justify-center gap-4 mt-2">
-        <div>
-          <label htmlFor="Top" className="block">
-            Top Text:
-          </label>
+    <div className=" flex flex-col gap-2 items-center justify-center  ">
+      <div className=" flex gap-2 mt-2 ">
+        <label htmlFor="">
+          Upper Text:
           <input
             type="text"
-            id="Top"
+            className="text p-1 border-2 opacity-75 border-white block w-40"
+            placeholder="KEEP CALM!"
             value={items.topText}
             name="topText"
             onChange={handleChange}
-            className="border border-white 
-            font-light font-mono w-35 opacity-[70%] p-1 rounded"
           />
-        </div>
-        <div className="">
-          <label htmlFor="Bottom" className="block">
-            Bottom Text:
-          </label>
+        </label>
+        <label htmlFor="">
+          Bottom Text:
           <input
             type="text"
-            id="Bottom"
+            className="text p-1 border-2 opacity-75 border-white block w-40"
+            placeholder="AND TAKE YOUR MONEY"
             value={items.bottomText}
             name="bottomText"
             onChange={handleChange}
-            className="border border-white w-35 font-mono 
-            font-light opacity-[70%] p-1 rounded"
           />
-        </div>
+        </label>
       </div>
-      {/* Button is right here */}
+
       <button
         onClick={props.handleClick}
-        className="submit bg-gradient-to-r from-[#672280] to-[#a626d3]   hover:opacity-[50%] border border-white mt-2 rounded cursor-pointer"
+        className="border w-82 rounded-md cursor-pointer"
       >
-        Generate new Image 🖼
+        Generate New Meme
       </button>
-      {/* The image section starts right here */}
-      <section className="relative min-h-40 ">
-        {!items.imgUrl ? (
-          <p className="text-white">Image Loading...</p>
-        ) : (
-          <>
-            <img
-              src={items.imgUrl}
-              alt=""
-              className="w-75 mt-2 rounded relative object-cover h-auto "
-            />
-            <span
-              className=" absolute top-4  left-1/2 transform -translate-x-1/2 text-center
-         text-xl  uppercase font-bold text-white drop-shadow-md bg-black bg-opacity-80 px-2 rounded "
-            >
-              {items.topText}
-            </span>
-            <span
-              className=" absolute bottom-2 left-1/2 transform -translate-x-1/2 drop-shadow-md bg-black bg-opacity-80 px-2 rounded
-          text-xl uppercase text-center font-bold text-white"
-            >
-              {items.bottomText}
-            </span>
-          </>
-        )}
-      </section>
+
+      <div className="relative">
+        <img src={items.image} alt="" className="w-82 " />
+        <span className="absolute p-2 top-2 left-25 bg-black">
+          {items.topText}
+        </span>
+        <span className="absolute p-2 bottom-2 left-16 bg-black">
+          {items.bottomText}
+        </span>
+      </div>
     </div>
   );
 }
